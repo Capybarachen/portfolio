@@ -1,30 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Po-Hua Chen : CV</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Contact</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
-
 <body>
 
 <nav>
-<a href="/">Home</a>
-<a href="/projects/">Projects</a>
-<a href="/contact/">Contact</a>
-<a href="/cv.html">CV</a>
+<a href="/portfolio/">Home</a>
+<a href="/portfolio/projects/">Projects</a>
+<a href="/portfolio/contact/">Contact</a>
+<a href="/portfolio/cv.html">CV</a>
 </nav>
 
-<h1>Po-Hua Chen - CV</h1>
+<h1>Contact</h1>
 
-<section>
-<h2>Education</h2>
-<p>UCSD - Data Science</p>
-</section>
+<form action="mailto:test123@gmail.com" method="POST" enctype="text/plain">
 
-<section>
-<h2>Skills</h2>
-<p>Python, SQL, HTML, CSS</p>
-</section>
+<label>Email:
+<input name="email" type="email">
+</label>
+
+<label>Subject:
+<input name="subject">
+</label>
+
+<label>Message:
+<textarea name="body"></textarea>
+</label>
+
+<button>Send</button>
+
+</form>
 
 </body>
 </html>
