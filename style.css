@@ -1,3 +1,9 @@
+body {
+  max-width: 100ch;
+  margin-inline: auto;
+  padding: 1em;
+}
+
 nav {
   display: flex;
   margin-bottom: 1em;
@@ -72,8 +78,22 @@ button {
 
 h1 {
   font-size: 400%;
+  margin-bottom: 0.5em;
 }
 
 h2 {
   font-size: 120%;
+}
+
+section {
+  margin-bottom: 2em;
+}
+
+section h2 {
+  border-bottom: 2px solid oklch(80% 3% 200);
+  padding-bottom: 0.2em;
+}
+
+section p {
+  margin: 0.5em 0;
 }
