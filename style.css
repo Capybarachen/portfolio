@@ -97,3 +97,10 @@ section h2 {
 section p {
   margin: 0.5em 0;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em 0;
+}
