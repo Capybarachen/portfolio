@@ -79,3 +79,18 @@ select.addEventListener("input", function (event) {
 });
 
 console.log("Navbar + Theme switch ready");
+
+
+let form = document.querySelector("form");
+
+if (form) {
+  form.addEventListener("submit", function (event) {
+    let email = form.email.value;
+    let subject = form.subject.value;
+    let body = form.body.value;
+
+    let url = `mailto:test123@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    form.action = url;
+  });
+}
