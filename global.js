@@ -57,3 +57,13 @@ Theme:
 </label>
 `
 );
+
+let select = document.querySelector("select");
+
+function setColorScheme(value) {
+  document.documentElement.style.setProperty("color-scheme", value);
+}
+
+select.addEventListener("input", (e) => {
+  setColorScheme(e.target.value);
+});
