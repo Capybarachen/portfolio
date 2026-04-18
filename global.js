@@ -4,6 +4,9 @@ function $$(selector, context = document) {
   return Array.from(context.querySelectorAll(selector));
 }
 
+document.querySelector("nav")?.remove();
+document.querySelector(".color-scheme")?.remove();
+
 let pages = [
   { url: "", title: "Home" },
   { url: "projects/", title: "Projects" },
@@ -42,28 +45,33 @@ for (let p of pages) {
   nav.append(a);
 }
 
-console.log("Navbar created successfully");
-
 document.body.insertAdjacentHTML(
   "afterbegin",
   `
-<label class="color-scheme">
-Theme:
-<select>
-  <option value="light dark">Auto</option>
-  <option value="light">Light</option>
-  <option value="dark">Dark</option>
-</select>
-</label>
-`
+  <label class="color-scheme">
+    Theme:
+    <select>
+      <option value="light dark">Auto</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </label>
+  `
 );
 
-let select = document.querySelector("select");
+let select = document.querySelector(".color-scheme select");
 
 function setColorScheme(value) {
   document.documentElement.style.setProperty("color-scheme", value);
 }
 
-select.addEventListener("input", (e) => {
-  setColorScheme(e.target.value);
+if ("colorScheme" in localStorage) {
+  setColorScheme(localStorage.colorScheme);
+  select.value = localStorage.colorScheme;
+}
+
+select.addEventListener("change", function (event) {
+  let value = event.target.value;
+  setColorScheme(value);
+  localStorage.colorScheme = value;
 });
