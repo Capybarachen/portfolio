@@ -43,3 +43,17 @@ for (let p of pages) {
 }
 
 console.log("Navbar created successfully");
+
+document.body.insertAdjacentHTML(
+  "afterbegin",
+  `
+<label class="color-scheme">
+Theme:
+<select>
+  <option value="light dark">Auto</option>
+  <option value="light">Light</option>
+  <option value="dark">Dark</option>
+</select>
+</label>
+`
+);
