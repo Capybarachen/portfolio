@@ -48,30 +48,34 @@ for (let p of pages) {
 document.body.insertAdjacentHTML(
   "afterbegin",
   `
-  <label class="color-scheme">
-    Theme:
-    <select>
-      <option value="light dark">Auto</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
-    </select>
-  </label>
-  `
+<label class="color-scheme">
+  Theme:
+  <select>
+    <option value="light dark">Auto</option>
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</label>
+`
 );
 
 let select = document.querySelector(".color-scheme select");
 
-function setColorScheme(value) {
-  document.documentElement.style.setProperty("color-scheme", value);
-}
 
 if ("colorScheme" in localStorage) {
-  setColorScheme(localStorage.colorScheme);
+  document.documentElement.style.setProperty(
+    "color-scheme",
+    localStorage.colorScheme
+  );
   select.value = localStorage.colorScheme;
 }
 
-select.addEventListener("change", function (event) {
+select.addEventListener("input", function (event) {
   let value = event.target.value;
-  setColorScheme(value);
+
+  document.documentElement.style.setProperty("color-scheme", value);
+
   localStorage.colorScheme = value;
 });
+
+console.log("Navbar + Theme switch ready");
