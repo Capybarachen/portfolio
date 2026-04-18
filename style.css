@@ -108,3 +108,15 @@ img {
 html {
   color-scheme: light dark;
 }
+
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
+  display: block;
+}
+
+.color-scheme select {
+  font: inherit;
+}
