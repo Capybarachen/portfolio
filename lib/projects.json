@@ -1,74 +1,74 @@
 [
   {
-    "title": "Portfolio Website",
-    "year": "2026",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A personal portfolio website built with HTML, CSS, and JavaScript."
-  },
-  {
-    "title": "DSC 106 Project 1",
-    "year": "2026",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A data visualization project for DSC 106."
-  },
-  {
-    "title": "JavaScript Lab",
-    "year": "2026",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A lab project using JavaScript to dynamically render webpage content."
-  },
-  {
-    "title": "HTML and CSS Website",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A simple website created with HTML and CSS."
-  },
-  {
-    "title": "Contact Form Page",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A contact page with a form and mailto functionality."
-  },
-  {
-    "title": "CV Page",
-    "year": "2025",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A resume-style webpage showing education, experience, and skills."
-  },
-  {
-    "title": "Python Data Analysis",
-    "year": "2024",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A data analysis project using Python basics."
-  },
-  {
-    "title": "Pandas Practice",
-    "year": "2024",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A practice project using pandas to explore tabular data."
-  },
-  {
-    "title": "Data Cleaning Exercise",
-    "year": "2024",
-    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A project focused on cleaning and organizing messy data."
-  },
-  {
-    "title": "Machine Learning Notes",
+    "title": "Introduction to Python",
     "year": "2023",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A beginner machine learning study project."
+    "description": "Learned basic Python programming, including variables, loops, and simple functions."
   },
   {
-    "title": "GitHub Portfolio Setup",
+    "title": "Python Practice Exercises",
     "year": "2023",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A project about setting up and publishing a website with GitHub Pages."
+    "description": "Completed small exercises to practice problem solving using Python."
   },
   {
-    "title": "Personal Photo Page",
+    "title": "Basic Programming Concepts",
     "year": "2023",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "A webpage that includes a personal photo and image description."
+    "description": "Built a foundation in programming logic and simple algorithms."
+  },
+  {
+    "title": "Java Programming Basics",
+    "year": "2024",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Learned object-oriented programming concepts using Java."
+  },
+  {
+    "title": "Java Projects",
+    "year": "2024",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Worked on small Java projects to practice classes and methods."
+  },
+  {
+    "title": "Data Structures Practice",
+    "year": "2024",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Practiced basic data structures and problem solving."
+  },
+  {
+    "title": "DSC 80 Data Cleaning",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Learned how to clean and process real-world datasets using Python."
+  },
+  {
+    "title": "Data Analysis with Pandas",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Used pandas to explore and analyze datasets."
+  },
+  {
+    "title": "Data Visualization Basics",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Created simple visualizations to understand data trends."
+  },
+  {
+    "title": "DSC 100 Machine Learning",
+    "year": "2026",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Learned basic machine learning concepts and models."
+  },
+  {
+    "title": "DSC 102 Statistical Analysis",
+    "year": "2026",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Studied statistical methods and data interpretation."
+  },
+  {
+    "title": "DSC 106 Data Visualization Project",
+    "year": "2026",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "Built a web-based data visualization project using JavaScript."
   }
 ]
