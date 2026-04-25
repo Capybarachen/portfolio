@@ -1,20 +1,74 @@
 [
   {
-    "title": "Project One",
-    "year": "2024",
+    "title": "Portfolio Website",
+    "year": "2026",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "My first project"
+    "description": "A personal portfolio website built with HTML, CSS, and JavaScript."
   },
   {
-    "title": "Project Two",
-    "year": "2024",
+    "title": "DSC 106 Project 1",
+    "year": "2026",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "My second project"
+    "description": "A data visualization project for DSC 106."
   },
   {
-    "title": "Project Three",
+    "title": "JavaScript Lab",
+    "year": "2026",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "A lab project using JavaScript to dynamically render webpage content."
+  },
+  {
+    "title": "HTML and CSS Website",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "A simple website created with HTML and CSS."
+  },
+  {
+    "title": "Contact Form Page",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "A contact page with a form and mailto functionality."
+  },
+  {
+    "title": "CV Page",
+    "year": "2025",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "A resume-style webpage showing education, experience, and skills."
+  },
+  {
+    "title": "Python Data Analysis",
+    "year": "2024",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "A data analysis project using Python basics."
+  },
+  {
+    "title": "Pandas Practice",
+    "year": "2024",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "A practice project using pandas to explore tabular data."
+  },
+  {
+    "title": "Data Cleaning Exercise",
+    "year": "2024",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "A project focused on cleaning and organizing messy data."
+  },
+  {
+    "title": "Machine Learning Notes",
     "year": "2023",
     "image": "https://vis-society.github.io/labs/2/images/empty.svg",
-    "description": "My third project"
+    "description": "A beginner machine learning study project."
+  },
+  {
+    "title": "GitHub Portfolio Setup",
+    "year": "2023",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "A project about setting up and publishing a website with GitHub Pages."
+  },
+  {
+    "title": "Personal Photo Page",
+    "year": "2023",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "A webpage that includes a personal photo and image description."
   }
 ]
