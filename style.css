@@ -59,18 +59,10 @@ button {
   grid-column: 1 / -1;
 }
 
-
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
-  gap: 1em;
-}
-
-.projects article {
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: span 3;
-  gap: 1em;
+  gap: 2em;
 }
 
 .projects h2 {
@@ -121,13 +113,6 @@ html {
   font: inherit;
 }
 
-
-.projects {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2em;
-}
-
 article {
   display: flex;
   flex-direction: column;
@@ -145,6 +130,6 @@ article img {
 }
 
 .project-desc {
-  margin-top: 0.5em;
+  margin: 0;
   line-height: 1.4;
 }
