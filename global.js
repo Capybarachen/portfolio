@@ -94,3 +94,34 @@ if (form) {
     form.action = url;
   });
 }
+
+export async function fetchJSON(url) {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch JSON");
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function renderProjects(projects, container, headingLevel = "h2") {
+  container.innerHTML = "";
+
+  for (let p of projects) {
+    const article = document.createElement("article");
+
+    article.innerHTML = `
+      <${headingLevel}>${p.title}</${headingLevel}>
+      <img src="${p.image}" alt="${p.title}">
+      <p>${p.description}</p>
+    `;
+
+    container.appendChild(article);
+  }
+}
