@@ -1,1 +1,20 @@
-
+[
+  {
+    "title": "Project One",
+    "year": "2024",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "My first project"
+  },
+  {
+    "title": "Project Two",
+    "year": "2024",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "My second project"
+  },
+  {
+    "title": "Project Three",
+    "year": "2023",
+    "image": "https://vis-society.github.io/labs/2/images/empty.svg",
+    "description": "My third project"
+  }
+]
