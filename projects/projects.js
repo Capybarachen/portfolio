@@ -1,4 +1,4 @@
-const projects = await fetchJSON('./lib/projects.json');
+import { fetchJSON, renderProjects } from '../global.js';
 
 projects.sort((a, b) => Number(b.year) - Number(a.year));
 
