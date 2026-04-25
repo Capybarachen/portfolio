@@ -1,6 +1,6 @@
 import { fetchJSON, renderProjects, fetchGithubData } from './global.js';
 
-const projects = await fetchJSON('./lib/projects.json');
+const projects = await fetchJSON('/portfolio/lib/projects.json');
 
 projects.sort((a, b) => Number(b.year) - Number(a.year));
 
