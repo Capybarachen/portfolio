@@ -121,3 +121,19 @@ html {
 .color-scheme select {
   font: inherit;
 }
+
+article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.project-year {
+  color: #aaa;
+  font-size: 0.9em;
+  margin: 0;
+}
+
+.project-desc {
+  margin-top: 0.5em;
+}
