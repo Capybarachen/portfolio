@@ -1,11 +1,7 @@
-import { fetchJSON, renderProjects } from './global.js';
+import { fetchJSON, renderProjects } from '../global.js';
 
 const projects = await fetchJSON('../lib/projects.json');
 
-const latest = projects.slice(0, 3);
-
 const container = document.querySelector('.projects');
 
-if (container) {
-  renderProjects(latest, container, 'h2');
-}
+renderProjects(projects, container, 'h2');
