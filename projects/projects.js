@@ -12,7 +12,7 @@ const svg = d3.select('#projects-pie-plot');
 const legend = d3.select('.legend');
 
 let query = '';
-let selectedIndex = -1;
+let selectedYear = null;
 
 let arcGenerator = d3.arc()
   .innerRadius(0)
@@ -26,22 +26,10 @@ function getFilteredProjects() {
     return values.includes(query.toLowerCase());
   });
 
-  if (selectedIndex !== -1) {
-    let rolledData = d3.rollups(
-      filteredProjects,
-      (v) => v.length,
-      (d) => d.year
+  if (selectedYear !== null) {
+    filteredProjects = filteredProjects.filter(
+      (project) => project.year === selectedYear
     );
-
-    let data = rolledData.map(([year, count]) => {
-      return { value: count, label: year };
-    });
-
-    let selectedYear = data[selectedIndex]?.label;
-
-    if (selectedYear) {
-      filteredProjects = filteredProjects.filter((project) => project.year === selectedYear);
-    }
   }
 
   return filteredProjects;
@@ -72,23 +60,27 @@ function renderPieChart(projectsGiven) {
   legend.selectAll('li').remove();
 
   arcs.forEach((arc, i) => {
+    let year = data[i].label;
+
     svg.append('path')
       .attr('d', arc)
       .attr('fill', colors(i))
-      .attr('class', selectedIndex === i ? 'selected' : '')
+      .attr('class', selectedYear === year ? 'selected' : '')
       .on('click', () => {
-        selectedIndex = selectedIndex === i ? -1 : i;
+        selectedYear = selectedYear === year ? null : year;
         renderPage(getFilteredProjects());
       });
   });
 
   data.forEach((d, i) => {
+    let year = d.label;
+
     legend.append('li')
       .attr('style', `--color:${colors(i)}`)
-      .attr('class', selectedIndex === i ? 'selected' : '')
+      .attr('class', selectedYear === year ? 'selected' : '')
       .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
       .on('click', () => {
-        selectedIndex = selectedIndex === i ? -1 : i;
+        selectedYear = selectedYear === year ? null : year;
         renderPage(getFilteredProjects());
       });
   });
@@ -96,7 +88,7 @@ function renderPieChart(projectsGiven) {
 
 searchInput.addEventListener('input', (event) => {
   query = event.target.value;
-  selectedIndex = -1;
+  selectedYear = null;
   renderPage(getFilteredProjects());
 });
 
