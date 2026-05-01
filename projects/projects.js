@@ -43,6 +43,8 @@ let data = rolledData.map(([year, count]) => {
 let sliceGenerator = d3.pie()
   .value(d => d.value);
 
+let selectedYear = null;
+
 let arcData = sliceGenerator(data);
 
 let arcs = arcData.map(d => arcGenerator(d));
@@ -53,7 +55,27 @@ svg.selectAll('path').remove();
 arcs.forEach((arc, i) => {
   svg.append('path')
     .attr('d', arc)
-    .attr('fill', colors(i));
+    .attr('fill', colors(i))
+    .on('click', () => {
+
+      let year = data[i].label;
+
+      if (selectedYear === year) {
+        selectedYear = null;
+      } else {
+        selectedYear = year;
+      }
+
+      let filtered;
+
+      if (selectedYear === null) {
+        filtered = projects;
+      } else {
+        filtered = projects.filter(p => p.year === selectedYear);
+      }
+
+      renderProjects(filtered, container, 'h2');
+    });
 });
 
 
