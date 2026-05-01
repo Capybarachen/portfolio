@@ -131,6 +131,7 @@ article img {
   line-height: 1.4;
 }
 
+/* ===== Chart Layout ===== */
 
 .chart-container {
   display: flex;
@@ -145,6 +146,7 @@ article img {
   flex-shrink: 0;
   overflow: visible;
 }
+
 
 .legend {
   flex: 1;
@@ -171,6 +173,7 @@ article img {
   display: inline-block;
 }
 
+
 .searchBar {
   max-width: 50em;
   margin: 1.5em 0;
@@ -178,14 +181,11 @@ article img {
   display: block;
 }
 
+
 #projects-pie-plot path {
   cursor: pointer;
-  transition: 300ms;
 }
 
-#projects-pie-plot:has(path:hover) path:not(:hover) {
-  opacity: 0.5;
-}
 
 .selected {
   --color: oklch(60% 45% 0) !important;
