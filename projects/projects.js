@@ -86,5 +86,25 @@ legend.selectAll('li').remove();
 data.forEach((d, i) => {
   legend.append('li')
     .attr('style', `--color:${colors(i)}`)
-    .html(`<span class="swatch"></span> ${d.label} (${d.value})`);
+    .html(`<span class="swatch"></span> ${d.label} (${d.value})`)
+    .on('click', () => {
+
+      let year = d.label;
+
+      if (selectedYear === year) {
+        selectedYear = null;
+      } else {
+        selectedYear = year;
+      }
+
+      let filtered;
+
+      if (selectedYear === null) {
+        filtered = projects;
+      } else {
+        filtered = projects.filter(p => p.year === selectedYear);
+      }
+
+      renderProjects(filtered, container, 'h2');
+    });
 });
