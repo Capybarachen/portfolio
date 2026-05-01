@@ -174,3 +174,58 @@ article img {
 .legend li {
   cursor: pointer;
 }
+
+#projects-pie-plot {
+  max-width: 20em;
+  width: 100%;
+  overflow: visible;
+}
+
+.chart-container {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  margin-block: 2em;
+}
+
+.legend {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 1em;
+  border: 1px solid oklch(80% 3% 200);
+  padding: 1em;
+  margin: 0;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  list-style: none;
+  cursor: pointer;
+}
+
+.swatch {
+  width: 1em;
+  height: 1em;
+  background: var(--color);
+  display: inline-block;
+}
+
+#projects-pie-plot path {
+  cursor: pointer;
+  transition: 300ms;
+}
+
+#projects-pie-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
+.selected {
+  --color: oklch(60% 45% 0) !important;
+}
+
+.selected:is(path) {
+  fill: var(--color);
+}
