@@ -47,9 +47,22 @@ let arcData = sliceGenerator(data);
 
 let arcs = arcData.map(d => arcGenerator(d));
 
+let colors = d3.scaleOrdinal(d3.schemeTableau10);
+
 svg.selectAll('path').remove();
 arcs.forEach((arc, i) => {
   svg.append('path')
     .attr('d', arc)
-    .attr('fill', ['red', 'blue', 'green', 'orange'][i]);
+    .attr('fill', colors(i));
+});
+
+
+let legend = d3.select('.legend');
+
+legend.selectAll('li').remove();
+
+data.forEach((d, i) => {
+  legend.append('li')
+    .attr('style', `--color:${colors(i)}`)
+    .html(`<span class="swatch"></span> ${d.label} (${d.value})`);
 });
