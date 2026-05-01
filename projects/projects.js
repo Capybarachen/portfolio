@@ -28,3 +28,30 @@ let arc = arcGenerator({
 svg.append('path')
   .attr('d', arc)
   .attr('fill', 'red');
+
+// STEP 3
+let rolledData = d3.rollups(
+  projects,
+  (v) => v.length,
+  (d) => d.year
+);
+
+let data = rolledData.map(([year, count]) => {
+  return { value: count, label: year };
+});
+
+let sliceGenerator = d3.pie()
+  .value(d => d.value);
+
+let arcData = sliceGenerator(data);
+
+let arcs = arcData.map(d => arcGenerator(d));
+
+
+svg.selectAll('path').remove();
+
+((arc, i) => {
+  svg.append('path')
+    .attr('d', arc)
+    .attr('fill', ['red', 'blue', 'green', 'orange'][i]);
+});
