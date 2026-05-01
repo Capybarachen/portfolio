@@ -47,10 +47,8 @@ let arcData = sliceGenerator(data);
 
 let arcs = arcData.map(d => arcGenerator(d));
 
-
 svg.selectAll('path').remove();
-
-((arc, i) => {
+arcs.forEach((arc, i) => {
   svg.append('path')
     .attr('d', arc)
     .attr('fill', ['red', 'blue', 'green', 'orange'][i]);
