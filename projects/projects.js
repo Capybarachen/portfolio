@@ -55,9 +55,11 @@ function renderPieChart(projectsGiven) {
     d => d.year
   );
 
-  let data = rolledData.map(([year, count]) => ({
+  const allYears = [...new Set(projects.map(p => p.year))];
+
+  let data = allYears.map(year => ({
     label: year,
-    value: count
+    value: projectsGiven.filter(p => p.year === year).length
   }));
 
   const allYears = [...new Set(projects.map(p => p.year))];
