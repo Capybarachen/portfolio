@@ -67,6 +67,7 @@ function renderPieChart(projectsGiven) {
     svg.append('path')
       .attr('d', arcGenerator(d))
       .attr('fill', colors(i))
+      .attr('class', selectedYear === year ? 'selected' : '')
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
         renderPage(getFilteredProjects());
@@ -78,6 +79,7 @@ function renderPieChart(projectsGiven) {
 
     legend.append('li')
       .attr('style', `--color:${colors(i)}`)
+      .attr('class', selectedYear === year ? 'selected' : '')
       .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
@@ -85,6 +87,7 @@ function renderPieChart(projectsGiven) {
       });
   });
 }
+
 // ===== Search =====
 searchInput.addEventListener('input', (event) => {
   query = event.target.value;
