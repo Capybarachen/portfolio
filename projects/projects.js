@@ -20,6 +20,7 @@ const arcGenerator = d3.arc()
 
 const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 
+// ===== SEARCH FILTER =====
 function getSearchFilteredProjects() {
   return projects.filter((project) => {
     let values = Object.values(project).join(' ').toLowerCase();
@@ -27,6 +28,7 @@ function getSearchFilteredProjects() {
   });
 }
 
+// ===== FINAL (SEARCH + YEAR) =====
 function getFinalProjects() {
   let filtered = getSearchFilteredProjects();
 
@@ -37,11 +39,14 @@ function getFinalProjects() {
   return filtered;
 }
 
+// ===== PROJECT LIST =====
 function renderProjectList(projectsGiven) {
   renderProjects(projectsGiven, projectsContainer, 'h2');
+
   projectCount.textContent = projects.length;
 }
 
+// ===== PIE =====
 function renderPieChart(projectsGiven) {
 
   let rolledData = d3.rollups(
@@ -63,6 +68,7 @@ function renderPieChart(projectsGiven) {
   svg.selectAll('path').remove();
   legend.selectAll('li').remove();
 
+  // ===== slices =====
   arcData.forEach((d) => {
     let year = d.data.label;
 
@@ -90,18 +96,22 @@ function renderPieChart(projectsGiven) {
   });
 }
 
+// ===== UPDATE =====
 function updatePage() {
-  const searchFiltered = getSearchFilteredProjects();
-  const finalProjects = getFinalProjects();
+
+  const searchFiltered = getSearchFilteredProjects(); 
+  const finalProjects = getFinalProjects(); 
 
   renderProjectList(finalProjects);
   renderPieChart(searchFiltered);
 }
 
+// ===== SEARCH =====
 searchInput.addEventListener('input', (e) => {
   query = e.target.value;
   selectedYear = null;
   updatePage();
 });
 
+// ===== INIT =====
 updatePage();
