@@ -194,6 +194,10 @@ article img {
   opacity: 0.5;
 }
 
+#projects-pie-plot:has(path.selected) path:not(.selected) {
+  opacity: 0.5;
+}
+
 .selected {
   --color: oklch(60% 45% 0) !important;
 }
