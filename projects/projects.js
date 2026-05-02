@@ -60,7 +60,8 @@ function renderPieChart(projectsGiven) {
     value: count
   }));
 
-  colorScale.domain(data.map(d => d.label));
+  const allYears = [...new Set(projects.map(p => p.year))];
+  colorScale.domain(allYears);
 
   let pie = d3.pie().value(d => d.value);
   let arcData = pie(data);
