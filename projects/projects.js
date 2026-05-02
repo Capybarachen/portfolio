@@ -20,30 +20,30 @@ let arcGenerator = d3.arc()
 
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-// ===== Filter =====
-function getFilteredProjects() {
-  let filteredProjects = projects.filter((project) => {
+function getSearchFilteredProjects() {
+  return projects.filter((project) => {
     let values = Object.values(project).join(' ').toLowerCase();
     return values.includes(query.toLowerCase());
   });
+}
+
+function getFinalProjects() {
+  let filteredProjects = getSearchFilteredProjects();
 
   if (selectedYear !== null) {
-    filteredProjects = filteredProjects.filter(
-      (project) => project.year === selectedYear
-    );
+    filteredProjects = filteredProjects.filter((project) => {
+      return project.year === selectedYear;
+    });
   }
 
   return filteredProjects;
 }
 
-// ===== Main Render =====
-function renderPage(projectsGiven) {
+function renderProjectList(projectsGiven) {
   renderProjects(projectsGiven, projectsContainer, 'h2');
   projectCount.textContent = projectsGiven.length;
-  renderPieChart(projectsGiven);
 }
 
-// ===== Pie Chart =====
 function renderPieChart(projectsGiven) {
   let rolledData = d3.rollups(
     projectsGiven,
@@ -55,8 +55,8 @@ function renderPieChart(projectsGiven) {
     return { value: count, label: year };
   });
 
-  let pie = d3.pie().value(d => d.value);
-  let arcData = pie(data);
+  let sliceGenerator = d3.pie().value((d) => d.value);
+  let arcData = sliceGenerator(data);
 
   svg.selectAll('path').remove();
   legend.selectAll('li').remove();
@@ -70,7 +70,7 @@ function renderPieChart(projectsGiven) {
       .attr('class', selectedYear === year ? 'selected' : '')
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
-        renderPage(getFilteredProjects());
+        updatePage();
       });
   });
 
@@ -83,17 +83,24 @@ function renderPieChart(projectsGiven) {
       .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
-        renderPage(getFilteredProjects());
+        updatePage();
       });
   });
 }
 
-// ===== Search =====
+function updatePage() {
+  let searchFilteredProjects = getSearchFilteredProjects();
+  let finalProjects = getFinalProjects();
+
+  renderProjectList(finalProjects);
+
+  renderPieChart(searchFilteredProjects);
+}
+
 searchInput.addEventListener('input', (event) => {
   query = event.target.value;
   selectedYear = null;
-  renderPage(getFilteredProjects());
+  updatePage();
 });
 
-// ===== Init =====
-renderPage(projects);
+updatePage();
