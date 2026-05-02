@@ -184,23 +184,15 @@ article img {
 
 #projects-pie-plot path {
   cursor: pointer;
-}
-
-
-.selected {
-  --color: oklch(60% 45% 0) !important;
-}
-
-.selected:is(path) {
-  fill: var(--color);
+  transition: 300ms;
 }
 
 #projects-pie-plot path:hover {
-  filter: brightness(0.7);
+  filter: brightness(0.88);
 }
 
 #projects-pie-plot path.selected {
-  fill: oklch(65% 0.25 350);
+  fill: oklch(60% 45% 0);
 }
 
 .legend li.selected {
