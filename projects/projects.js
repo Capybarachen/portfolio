@@ -20,9 +20,10 @@ let arcGenerator = d3.arc()
 
 let colors = d3.scaleOrdinal(d3.schemeTableau10);
 
+// ===== Filter =====
 function getFilteredProjects() {
   let filteredProjects = projects.filter((project) => {
-    let values = Object.values(project).join('\n').toLowerCase();
+    let values = Object.values(project).join(' ').toLowerCase();
     return values.includes(query.toLowerCase());
   });
 
@@ -35,12 +36,14 @@ function getFilteredProjects() {
   return filteredProjects;
 }
 
+// ===== Main Render =====
 function renderPage(projectsGiven) {
   renderProjects(projectsGiven, projectsContainer, 'h2');
   projectCount.textContent = projectsGiven.length;
   renderPieChart(projectsGiven);
 }
 
+// ===== Pie Chart =====
 function renderPieChart(projectsGiven) {
   let rolledData = d3.rollups(
     projectsGiven,
@@ -54,18 +57,16 @@ function renderPieChart(projectsGiven) {
 
   let sliceGenerator = d3.pie().value((d) => d.value);
   let arcData = sliceGenerator(data);
-  let arcs = arcData.map((d) => arcGenerator(d));
 
   svg.selectAll('path').remove();
   legend.selectAll('li').remove();
 
-  arcs.forEach((arc, i) => {
-    let year = data[i].label;
+  arcData.forEach((d, i) => {
+    let year = d.data.label;
 
     svg.append('path')
-      .attr('d', arc)
-      .attr('fill', colors(i))
-      .attr('class', selectedYear === year ? 'selected' : '')
+      .attr('d', arcGenerator(d))
+      .attr('fill', selectedYear === year ? 'oklch(65% 0.25 350)' : colors(i))
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
         renderPage(getFilteredProjects());
@@ -77,7 +78,6 @@ function renderPieChart(projectsGiven) {
 
     legend.append('li')
       .attr('style', `--color:${colors(i)}`)
-      .attr('class', selectedYear === year ? 'selected' : '')
       .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
@@ -86,10 +86,12 @@ function renderPieChart(projectsGiven) {
   });
 }
 
+// ===== Search =====
 searchInput.addEventListener('input', (event) => {
   query = event.target.value;
   selectedYear = null;
   renderPage(getFilteredProjects());
 });
 
+// ===== Init =====
 renderPage(projects);
