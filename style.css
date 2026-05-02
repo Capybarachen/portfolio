@@ -147,6 +147,7 @@ article img {
   overflow: visible;
 }
 
+/* ===== Legend ===== */
 
 .legend {
   flex: 1;
@@ -171,6 +172,39 @@ article img {
   height: 1em;
   background: var(--color);
   display: inline-block;
+}
+
+/* ===== Search ===== */
+
+.searchBar {
+  max-width: 50em;
+  margin: 1.5em 0;
+  padding: 0.5em;
+  display: block;
+}
+
+/* ===== Pie Interaction（教授版本）===== */
+
+#projects-pie-plot path {
+  cursor: pointer;
+  transition: 300ms;
+}
+
+#projects-pie-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
+.selected {
+  --color: oklch(60% 45% 0) !important;
+}
+
+.selected:is(path) {
+  fill: var(--color);
+}
+
+.legend li.selected {
+  color: var(--color);
+  font-weight: bold;
 }
 
 
