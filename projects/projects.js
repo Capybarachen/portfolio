@@ -55,8 +55,8 @@ function renderPieChart(projectsGiven) {
     return { value: count, label: year };
   });
 
-  let sliceGenerator = d3.pie().value((d) => d.value);
-  let arcData = sliceGenerator(data);
+  let pie = d3.pie().value(d => d.value);
+  let arcData = pie(data);
 
   svg.selectAll('path').remove();
   legend.selectAll('li').remove();
@@ -66,7 +66,7 @@ function renderPieChart(projectsGiven) {
 
     svg.append('path')
       .attr('d', arcGenerator(d))
-      .attr('fill', selectedYear === year ? 'oklch(65% 0.25 350)' : colors(i))
+      .attr('fill', colors(i))
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
         renderPage(getFilteredProjects());
@@ -85,7 +85,6 @@ function renderPieChart(projectsGiven) {
       });
   });
 }
-
 // ===== Search =====
 searchInput.addEventListener('input', (event) => {
   query = event.target.value;
