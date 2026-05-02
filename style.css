@@ -194,3 +194,15 @@ article img {
 .selected:is(path) {
   fill: var(--color);
 }
+
+#projects-pie-plot path:hover {
+  filter: brightness(0.7);
+}
+
+#projects-pie-plot path.selected {
+  fill: oklch(65% 0.25 350);
+}
+
+.legend li.selected {
+  font-weight: bold;
+}
