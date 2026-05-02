@@ -221,7 +221,10 @@ article {
 }
 
 /* legend  */
+.legend li.selected .swatch {
+  background: oklch(60% 45% 0);
+}
+
 .legend li.selected {
-  color: oklch(60% 45% 0);
   font-weight: bold;
 }
