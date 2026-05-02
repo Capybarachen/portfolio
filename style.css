@@ -4,6 +4,8 @@ body {
   padding: 1em;
 }
 
+/* ===== Nav ===== */
+
 nav {
   display: flex;
   margin-bottom: 1em;
@@ -35,6 +37,8 @@ nav a:hover {
   background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
 }
 
+/* ===== Form ===== */
+
 input, textarea, button {
   font: inherit;
 }
@@ -60,6 +64,8 @@ button {
   grid-column: 1 / -1;
 }
 
+/* ===== Projects Grid ===== */
+
 .projects {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
@@ -69,6 +75,8 @@ button {
 .projects h2 {
   margin: 0;
 }
+
+/* ===== Typography ===== */
 
 h1 {
   font-size: 400%;
@@ -92,23 +100,28 @@ section p {
   margin: 0.5em 0;
 }
 
+/* ===== Images ===== */
+
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
+/* ===== Theme Toggle ===== */
+
 .color-scheme {
   position: absolute;
   top: 1rem;
   right: 1rem;
   font-size: 80%;
-  display: block;
 }
 
 .color-scheme select {
   font: inherit;
 }
+
+/* ===== Project Cards ===== */
 
 article {
   display: flex;
@@ -119,10 +132,6 @@ article {
 .project-year {
   color: #aaa;
   font-size: 0.9em;
-  margin: 0;
-}
-
-article img {
   margin: 0;
 }
 
@@ -141,8 +150,8 @@ article img {
 }
 
 #projects-pie-plot {
-  width: 14em;
-  height: 14em;
+  width: 12em;
+  height: 12em;
   flex-shrink: 0;
   overflow: visible;
 }
@@ -168,71 +177,51 @@ article img {
 }
 
 .swatch {
-  width: 0.8em;
-  height: 0.8em;
+  width: 0.9em;
+  height: 0.9em;
   background: var(--color);
-  display: inline-block;
   border-radius: 50%;
+  display: inline-block;
 }
+
 /* ===== Search ===== */
 
 .searchBar {
   max-width: 50em;
   margin: 1.5em 0;
-  padding: 0.5em;
+  padding: 0.6em;
   display: block;
 }
 
-/* ===== Pie Interaction（教授版本）===== */
+/* ===== Pie Interaction===== */
 
 #projects-pie-plot path {
   cursor: pointer;
   transition: 300ms;
 }
 
+/* hover → 其他變淡 */
 #projects-pie-plot:has(path:hover) path:not(:hover) {
   opacity: 0.5;
 }
 
+/* hover */
+#projects-pie-plot path:hover {
+  filter: brightness(0.85);
+}
+
+/* click  */
 #projects-pie-plot:has(path.selected) path:not(.selected) {
   opacity: 0.5;
 }
 
-.selected {
-  --color: oklch(60% 45% 0) !important;
-}
-
-.selected:is(path) {
-  fill: var(--color);
-}
-
-.legend li.selected {
-  color: var(--color);
-  font-weight: bold;
-}
-
-
-.searchBar {
-  max-width: 50em;
-  margin: 1.5em 0;
-  padding: 0.5em;
-  display: block;
-}
-
-
-#projects-pie-plot path {
-  cursor: pointer;
-  transition: 300ms;
-}
-
-#projects-pie-plot path:hover {
-  filter: brightness(0.88);
-}
-
+/* click */
 #projects-pie-plot path.selected {
   fill: oklch(60% 45% 0);
 }
 
+/* legend  */
 .legend li.selected {
+  color: oklch(60% 45% 0);
   font-weight: bold;
 }
