@@ -309,3 +309,13 @@ circle {
 circle:hover {
   transform: scale(1.5);
 }
+
+circle.selected {
+  stroke: cyan;
+  stroke-width: 2;
+  fill: cyan;
+}
+
+body {
+  line-height: 1.5;
+}

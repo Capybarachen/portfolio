@@ -1,5 +1,10 @@
 import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7/+esm';
 
+let selectedCommits = [];
+let xScale;
+let yScale;
+let commits;
+
 async function loadData() {
 
   const data = await d3.csv('loc.csv', (row) => ({
@@ -35,7 +40,7 @@ function processCommits(data) {
         datetime
       } = first;
 
-      return {
+      let ret = {
 
         id: commit,
 
@@ -55,6 +60,14 @@ function processCommits(data) {
 
         totalLines: lines.length,
       };
+              Object.defineProperty(ret, 'lines', {
+            value: lines,
+            writable: true,
+            configurable: true,
+            enumerable: false,
+        });
+
+        return ret;
     });
 }
 
@@ -143,7 +156,7 @@ function renderTooltipContent(commit) {
     commit.totalLines;
 }
 
-function renderScatterPlot(commits) {
+function renderScatterPlot(commitData) {
 
   const width = 1000;
   const height = 650;
@@ -170,10 +183,10 @@ function renderScatterPlot(commits) {
     height: height - margin.top - margin.bottom,
   };
 
-  const xScale = d3
+  xScale = d3
     .scaleTime()
     .domain(
-      d3.extent(commits, d => d.datetime)
+      d3.extent(commitData, d => d.datetime)
     )
     .range([
       usableArea.left,
@@ -181,13 +194,22 @@ function renderScatterPlot(commits) {
     ])
     .nice();
 
-  const yScale = d3
+  yScale = d3
     .scaleLinear()
     .domain([0, 24])
     .range([
       usableArea.bottom,
       usableArea.top
     ]);
+
+    const rScale = d3
+    .scaleSqrt()
+
+    .domain(
+        d3.extent(commitData, d => d.totalLines)
+    )
+
+    .range([4, 30]);
 
   // ===== gridlines =====
 
@@ -207,7 +229,11 @@ function renderScatterPlot(commits) {
 
   // ===== axes =====
 
-  const xAxis = d3.axisBottom(xScale);
+  const xAxis = d3
+    .axisBottom(xScale)
+    .tickFormat(
+        d3.timeFormat('%b %d')
+    );
 
   const yAxis = d3
     .axisLeft(yScale)
@@ -239,8 +265,14 @@ function renderScatterPlot(commits) {
 
   dots
     .selectAll('circle')
-    .data(commits)
+    .data(
+        d3.sort(
+            commitData,
+            d => -d.totalLines
+        )
+    )
     .join('circle')
+    .attr('class', 'commit')
 
     .attr(
       'cx',
@@ -252,8 +284,9 @@ function renderScatterPlot(commits) {
       d => yScale(d.hourFrac)
     )
 
-    .attr('r', 7)
+    .attr('r', d => rScale(d.totalLines))
     .attr('fill', 'hotpink')
+    
 
     .on('mouseenter', (event, commit) => {
 
@@ -269,11 +302,66 @@ function renderScatterPlot(commits) {
         updateTooltipVisibility(false);
     });
 
+    const brush = d3.brush()
+
+        .extent([
+            [usableArea.left, usableArea.top],
+            [usableArea.right, usableArea.bottom]
+    ]);
+
+    svg.append('g')
+        .call(brush);
+    brush.on('start brush end', brushed);
+    svg.selectAll('.dots, .overlay ~ *').raise();
+}
+
+function brushed(event) {
+
+  const selection = event.selection;
+
+  if (!selection) {
+
+    selectedCommits = [];
+
+  } else {
+
+    const [[x0, y0], [x1, y1]] = selection;
+
+    selectedCommits = commits.filter(commit => {
+
+      const x = xScale(commit.datetime);
+
+      const y = yScale(commit.hourFrac);
+
+      return (
+        x >= x0 &&
+        x <= x1 &&
+        y >= y0 &&
+        y <= y1
+      );
+    });
+  }
+
+  updateSelection();
+}
+
+function updateSelection() {
+
+  d3.selectAll('circle')
+    .classed('selected', d =>
+      selectedCommits.includes(d)
+    );
+
+  document.getElementById(
+    'selection-count'
+  ).textContent =
+
+    `${selectedCommits.length} commits selected`;
 }
 
 let data = await loadData();
 
-let commits = processCommits(data);
+commits = processCommits(data);
 
 console.log(data);
 
