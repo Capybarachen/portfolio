@@ -3,7 +3,6 @@ import { fetchJSON, renderProjects } from '../global.js';
 
 const projects = await fetchJSON('/portfolio/lib/projects.json');
 
-// 排序（新→舊）
 projects.sort((a, b) => Number(b.year) - Number(a.year));
 
 const projectsContainer = document.querySelector('.projects');
@@ -19,10 +18,8 @@ const arcGenerator = d3.arc()
   .innerRadius(0)
   .outerRadius(50);
 
-// 固定色盤（穩定顏色對應）
 const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 
-// ===== 搜尋過濾（不含年份）=====
 function getSearchFilteredProjects() {
   return projects.filter((project) => {
     let values = Object.values(project).join(' ').toLowerCase();
@@ -30,7 +27,6 @@ function getSearchFilteredProjects() {
   });
 }
 
-// ===== 最終清單（含年份）=====
 function getFinalProjects() {
   let filtered = getSearchFilteredProjects();
 
@@ -41,13 +37,11 @@ function getFinalProjects() {
   return filtered;
 }
 
-// ===== 渲染卡片 + 數量 =====
 function renderProjectList(projectsGiven) {
   renderProjects(projectsGiven, projectsContainer, 'h2');
-  projectCount.textContent = projectsGiven.length;
+  projectCount.textContent = projects.length;
 }
 
-// ===== Pie Chart（❗永遠用 searchFilteredProjects）=====
 function renderPieChart(projectsGiven) {
 
   let rolledData = d3.rollups(
@@ -61,7 +55,6 @@ function renderPieChart(projectsGiven) {
     value: count
   }));
 
-  // ⭐ 確保顏色固定（不會因為 filter 改順序）
   colorScale.domain(data.map(d => d.label));
 
   let pie = d3.pie().value(d => d.value);
@@ -70,7 +63,6 @@ function renderPieChart(projectsGiven) {
   svg.selectAll('path').remove();
   legend.selectAll('li').remove();
 
-  // ===== slices =====
   arcData.forEach((d) => {
     let year = d.data.label;
 
@@ -84,7 +76,6 @@ function renderPieChart(projectsGiven) {
       });
   });
 
-  // ===== legend =====
   data.forEach((d) => {
     let year = d.label;
 
@@ -99,23 +90,18 @@ function renderPieChart(projectsGiven) {
   });
 }
 
-// ===== 主更新流程 =====
 function updatePage() {
   const searchFiltered = getSearchFilteredProjects();
   const finalProjects = getFinalProjects();
 
   renderProjectList(finalProjects);
-
-  // ⭐ 關鍵：pie 不用 finalProjects
   renderPieChart(searchFiltered);
 }
 
-// ===== search =====
 searchInput.addEventListener('input', (e) => {
   query = e.target.value;
   selectedYear = null;
   updatePage();
 });
 
-// ===== init =====
 updatePage();
