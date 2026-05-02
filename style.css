@@ -168,12 +168,12 @@ article img {
 }
 
 .swatch {
-  width: 1em;
-  height: 1em;
+  width: 0.8em;
+  height: 0.8em;
   background: var(--color);
   display: inline-block;
+  border-radius: 50%;
 }
-
 /* ===== Search ===== */
 
 .searchBar {
