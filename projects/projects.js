@@ -3,6 +3,7 @@ import { fetchJSON, renderProjects } from '../global.js';
 
 const projects = await fetchJSON('/portfolio/lib/projects.json');
 
+// 排序（新→舊）
 projects.sort((a, b) => Number(b.year) - Number(a.year));
 
 const projectsContainer = document.querySelector('.projects');
@@ -14,12 +15,14 @@ const legend = d3.select('.legend');
 let query = '';
 let selectedYear = null;
 
-let arcGenerator = d3.arc()
+const arcGenerator = d3.arc()
   .innerRadius(0)
   .outerRadius(50);
 
-let colors = d3.scaleOrdinal(d3.schemeTableau10);
+// 固定色盤（穩定顏色對應）
+const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 
+// ===== 搜尋過濾（不含年份）=====
 function getSearchFilteredProjects() {
   return projects.filter((project) => {
     let values = Object.values(project).join(' ').toLowerCase();
@@ -27,46 +30,53 @@ function getSearchFilteredProjects() {
   });
 }
 
+// ===== 最終清單（含年份）=====
 function getFinalProjects() {
-  let filteredProjects = getSearchFilteredProjects();
+  let filtered = getSearchFilteredProjects();
 
   if (selectedYear !== null) {
-    filteredProjects = filteredProjects.filter((project) => {
-      return project.year === selectedYear;
-    });
+    filtered = filtered.filter(p => p.year === selectedYear);
   }
 
-  return filteredProjects;
+  return filtered;
 }
 
+// ===== 渲染卡片 + 數量 =====
 function renderProjectList(projectsGiven) {
   renderProjects(projectsGiven, projectsContainer, 'h2');
   projectCount.textContent = projectsGiven.length;
 }
 
+// ===== Pie Chart（❗永遠用 searchFilteredProjects）=====
 function renderPieChart(projectsGiven) {
+
   let rolledData = d3.rollups(
     projectsGiven,
-    (v) => v.length,
-    (d) => d.year
+    v => v.length,
+    d => d.year
   );
 
-  let data = rolledData.map(([year, count]) => {
-    return { value: count, label: year };
-  });
+  let data = rolledData.map(([year, count]) => ({
+    label: year,
+    value: count
+  }));
 
-  let sliceGenerator = d3.pie().value((d) => d.value);
-  let arcData = sliceGenerator(data);
+  // ⭐ 確保顏色固定（不會因為 filter 改順序）
+  colorScale.domain(data.map(d => d.label));
+
+  let pie = d3.pie().value(d => d.value);
+  let arcData = pie(data);
 
   svg.selectAll('path').remove();
   legend.selectAll('li').remove();
 
-  arcData.forEach((d, i) => {
+  // ===== slices =====
+  arcData.forEach((d) => {
     let year = d.data.label;
 
     svg.append('path')
       .attr('d', arcGenerator(d))
-      .attr('fill', colors(i))
+      .attr('fill', colorScale(year))
       .attr('class', selectedYear === year ? 'selected' : '')
       .on('click', () => {
         selectedYear = selectedYear === year ? null : year;
@@ -74,11 +84,12 @@ function renderPieChart(projectsGiven) {
       });
   });
 
-  data.forEach((d, i) => {
+  // ===== legend =====
+  data.forEach((d) => {
     let year = d.label;
 
     legend.append('li')
-      .attr('style', `--color:${colors(i)}`)
+      .attr('style', `--color:${colorScale(year)}`)
       .attr('class', selectedYear === year ? 'selected' : '')
       .html(`<span class="swatch"></span> ${d.label} <em>(${d.value})</em>`)
       .on('click', () => {
@@ -88,19 +99,23 @@ function renderPieChart(projectsGiven) {
   });
 }
 
+// ===== 主更新流程 =====
 function updatePage() {
-  let searchFilteredProjects = getSearchFilteredProjects();
-  let finalProjects = getFinalProjects();
+  const searchFiltered = getSearchFilteredProjects();
+  const finalProjects = getFinalProjects();
 
   renderProjectList(finalProjects);
 
-  renderPieChart(searchFilteredProjects);
+  // ⭐ 關鍵：pie 不用 finalProjects
+  renderPieChart(searchFiltered);
 }
 
-searchInput.addEventListener('input', (event) => {
-  query = event.target.value;
+// ===== search =====
+searchInput.addEventListener('input', (e) => {
+  query = e.target.value;
   selectedYear = null;
   updatePage();
 });
 
+// ===== init =====
 updatePage();
