@@ -20,7 +20,6 @@ const arcGenerator = d3.arc()
 
 const colorScale = d3.scaleOrdinal(d3.schemeTableau10);
 
-
 // ===== SEARCH FILTER =====
 function getSearchFilteredProjects() {
   return projects.filter((project) => {
@@ -28,7 +27,6 @@ function getSearchFilteredProjects() {
     return values.includes(query.toLowerCase());
   });
 }
-
 
 // ===== FINAL (SEARCH + YEAR) =====
 function getFinalProjects() {
@@ -41,25 +39,28 @@ function getFinalProjects() {
   return filtered;
 }
 
-
 // ===== PROJECT LIST =====
 function renderProjectList(projectsGiven) {
   renderProjects(projectsGiven, projectsContainer, 'h2');
 
-  projectCount.textContent = projectsGiven.length;
+  projectCount.textContent = projects.length;
 }
 
-
-// ===== PIE CHART =====
+// ===== PIE =====
 function renderPieChart(projectsGiven) {
 
-  const allYears = [...new Set(projects.map(p => p.year))];
+  let rolledData = d3.rollups(
+    projectsGiven,
+    v => v.length,
+    d => d.year
+  );
 
-  let data = allYears.map(year => ({
+  let data = rolledData.map(([year, count]) => ({
     label: year,
-    value: projectsGiven.filter(p => p.year === year).length
+    value: count
   }));
 
+  const allYears = [...new Set(projects.map(p => p.year))];
   colorScale.domain(allYears);
 
   let pie = d3.pie().value(d => d.value);
@@ -72,8 +73,6 @@ function renderPieChart(projectsGiven) {
   arcData.forEach((d) => {
     let year = d.data.label;
 
-    if (d.data.value === 0) return;
-
     svg.append('path')
       .attr('d', arcGenerator(d))
       .attr('fill', colorScale(year))
@@ -84,11 +83,8 @@ function renderPieChart(projectsGiven) {
       });
   });
 
-  // ===== legend =====
   data.forEach((d) => {
     let year = d.label;
-
-    if (d.value === 0) return;
 
     legend.append('li')
       .attr('style', `--color:${colorScale(year)}`)
@@ -101,16 +97,15 @@ function renderPieChart(projectsGiven) {
   });
 }
 
-
 // ===== UPDATE =====
 function updatePage() {
 
-  const finalProjects = getFinalProjects();
+  const searchFiltered = getSearchFilteredProjects(); 
+  const finalProjects = getFinalProjects(); 
 
-  renderPieChart(finalProjects);
   renderProjectList(finalProjects);
+  renderPieChart(searchFiltered);
 }
-
 
 // ===== SEARCH =====
 searchInput.addEventListener('input', (e) => {
@@ -118,7 +113,6 @@ searchInput.addEventListener('input', (e) => {
   selectedYear = null;
   updatePage();
 });
-
 
 // ===== INIT =====
 updatePage();
