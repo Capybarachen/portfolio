@@ -43,7 +43,7 @@ function getFinalProjects() {
 function renderProjectList(projectsGiven) {
   renderProjects(projectsGiven, projectsContainer, 'h2');
 
-  projectCount.textContent = projects.length;
+  projectCount.textContent = projectsGiven.length;
 }
 
 // ===== PIE =====
