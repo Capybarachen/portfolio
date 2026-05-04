@@ -319,3 +319,7 @@ circle.selected {
 body {
   line-height: 1.5;
 }
+
+h2 {
+  letter-spacing: 0.02em;
+}
