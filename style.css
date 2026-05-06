@@ -307,14 +307,9 @@ circle {
 }
 
 circle:hover {
-  transform: scale(1.5);
+  transform: scale(1.2);
 }
 
-circle.selected {
-  stroke: cyan;
-  stroke-width: 2;
-  fill: cyan;
-}
 
 body {
   line-height: 1.5;
@@ -326,4 +321,51 @@ h2 {
 
 svg {
   max-width: 100%;
+}
+
+#language-breakdown {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  text-align: center;
+
+  margin-top: 2em;
+}
+
+#language-breakdown dt {
+
+  grid-row: 1;
+
+  font-weight: bold;
+}
+
+#language-breakdown dd {
+
+  grid-row: 2;
+
+  margin: 0;
+}
+
+circle.selected {
+
+  fill: hotpink;
+
+  stroke: white;
+
+  stroke-width: 1.5;
+}
+
+#language-breakdown dd {
+  grid-row: 2;
+  margin: 0;
+  font-size: 1.2em;
+}
+
+#language-breakdown dt {
+  grid-row: 1;
+  font-size: 1.4em;
+  font-weight: bold;
 }

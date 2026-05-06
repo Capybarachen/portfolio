@@ -159,7 +159,7 @@ function renderTooltipContent(commit) {
 function renderScatterPlot(commitData) {
 
   const width = 1000;
-  const height = 650;
+  const height = 500;
 
   const svg = d3
     .select('#chart')
@@ -209,7 +209,7 @@ function renderScatterPlot(commitData) {
         d3.extent(commitData, d => d.totalLines)
     )
 
-    .range([4, 30]);
+    .range([6, 28]);
 
   // ===== gridlines =====
 
@@ -285,7 +285,8 @@ function renderScatterPlot(commitData) {
     )
 
     .attr('r', d => rScale(d.totalLines))
-    .attr('fill', 'hotpink')
+    .attr('fill', 'cyan')
+    .attr('fill-opacity', 0.7)
     
 
     .on('mouseenter', (event, commit) => {
@@ -356,7 +357,58 @@ function updateSelection() {
     'selection-count'
   ).textContent =
 
-    `${selectedCommits.length} commits selected`;
+    selectedCommits.length === 0
+        ? 'No commits selected'
+        : `${selectedCommits.length} commits selected`;
+  renderLanguageBreakdown();
+}
+
+function renderLanguageBreakdown() {
+
+  const container =
+    document.getElementById(
+      'language-breakdown'
+    );
+
+  container.innerHTML = '';
+
+  if (selectedCommits.length === 0) {
+    return;
+  }
+
+  const lines = selectedCommits.flatMap(
+    d => d.lines
+  );
+
+  const breakdown = d3.rollup(
+
+    lines,
+
+    v => v.length,
+
+    d => d.type
+  );
+
+  for (const [language, count] of breakdown) {
+
+    const proportion =
+      count / lines.length;
+
+    const dt =
+      document.createElement('dt');
+
+    dt.textContent = language;
+
+    const dd =
+      document.createElement('dd');
+
+    dd.textContent =
+      `${count} lines (${d3.format('.1~%')(proportion)})`;
+
+    container.appendChild(dt);
+
+    container.appendChild(dd);
+  }
 }
 
 let data = await loadData();
