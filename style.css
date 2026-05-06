@@ -323,3 +323,7 @@ body {
 h2 {
   letter-spacing: 0.02em;
 }
+
+svg {
+  max-width: 100%;
+}
