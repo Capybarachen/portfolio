@@ -1,0 +1,230 @@
+body {
+  max-width: 100ch;
+  margin-inline: auto;
+  padding: 1em;
+}
+
+/* ===== Nav ===== */
+
+nav {
+  display: flex;
+  margin-bottom: 1em;
+  border-bottom: 1px solid oklch(80% 3% 200);
+}
+
+nav a {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5em;
+}
+
+nav a.current {
+  border-bottom: 0.4em solid oklch(80% 3% 200);
+  padding-bottom: 0.1em;
+}
+
+html {
+  --color-accent: oklch(65% 50% 0);
+  accent-color: var(--color-accent);
+  color-scheme: light dark;
+}
+
+nav a:hover {
+  border-bottom: 0.4em solid var(--color-accent);
+  padding-bottom: 0.1em;
+  background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
+}
+
+/* ===== Form ===== */
+
+input, textarea, button {
+  font: inherit;
+}
+
+input, textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1em;
+}
+
+label {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+}
+
+button {
+  grid-column: 1 / -1;
+}
+
+/* ===== Projects Grid ===== */
+
+.projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+  gap: 2em;
+}
+
+.projects h2 {
+  margin: 0;
+}
+
+/* ===== Typography ===== */
+
+h1 {
+  font-size: 400%;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  font-size: 120%;
+}
+
+section {
+  margin-bottom: 2em;
+}
+
+section h2 {
+  border-bottom: 2px solid oklch(80% 3% 200);
+  padding-bottom: 0.2em;
+}
+
+section p {
+  margin: 0.5em 0;
+}
+
+/* ===== Images ===== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== Theme Toggle ===== */
+
+.color-scheme {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 80%;
+}
+
+.color-scheme select {
+  font: inherit;
+}
+
+/* ===== Project Cards ===== */
+
+article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.project-year {
+  color: #aaa;
+  font-size: 0.9em;
+  margin: 0;
+}
+
+.project-desc {
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ===== Chart Layout ===== */
+
+.chart-container {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  margin-block: 1.5em;
+}
+
+#projects-pie-plot {
+  width: 12em;
+  height: 12em;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+/* ===== Legend ===== */
+
+.legend {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+  gap: 1em;
+  border: 1px solid oklch(80% 3% 200);
+  padding: 1em;
+  margin: 0;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  list-style: none;
+  cursor: pointer;
+}
+
+.swatch {
+  width: 0.9em;
+  height: 0.9em;
+  background: var(--color);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ===== Search ===== */
+
+.searchBar {
+  max-width: 50em;
+  margin: 1.5em 0;
+  padding: 0.6em;
+  display: block;
+}
+
+/* ===== Pie Interaction===== */
+
+#projects-pie-plot path {
+  cursor: pointer;
+  transition: 300ms;
+}
+
+/* hover → 其他變淡 */
+#projects-pie-plot:has(path:hover) path:not(:hover) {
+  opacity: 0.5;
+}
+
+/* hover */
+#projects-pie-plot path:hover {
+  filter: brightness(0.85);
+}
+
+/* click  */
+#projects-pie-plot:has(path.selected) path:not(.selected) {
+  opacity: 0.5;
+}
+
+/* click */
+#projects-pie-plot path.selected {
+  fill: oklch(60% 45% 0);
+}
+
+/* legend  */
+.legend li.selected .swatch {
+  background: oklch(60% 45% 0);
+}
+
+.legend li.selected {
+  font-weight: bold;
+}
