@@ -104,7 +104,7 @@ function renderCommitInfo(data, commits) {
 function renderScatterPlot(commits) {
 
   const width = 1000;
-  const height = 600;
+  const height = 650;
 
   const svg = d3
     .select('#chart')
