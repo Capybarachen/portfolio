@@ -210,8 +210,7 @@ function renderScatterPlot(commits) {
       d => yScale(d.hourFrac)
     )
 
-    .attr('r', 5)
-
+    .attr('r', 7)
     .attr('fill', 'hotpink');
 }
 
