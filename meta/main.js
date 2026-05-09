@@ -212,7 +212,7 @@ function renderScatterPlot(commits) {
 
     .attr('r', 5)
 
-    .attr('fill', 'steelblue');
+    .attr('fill', 'hotpink');
 }
 
 let data = await loadData();
