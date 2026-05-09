@@ -101,6 +101,48 @@ function renderCommitInfo(data, commits) {
       d3.max(data, d => d.depth)
     );
 }
+
+function updateTooltipVisibility(isVisible) {
+
+  const tooltip =
+    document.getElementById('commit-tooltip');
+
+  tooltip.hidden = !isVisible;
+}
+
+function updateTooltipPosition(event) {
+
+  const tooltip =
+    document.getElementById('commit-tooltip');
+
+  tooltip.style.left =
+    `${event.clientX + 10}px`;
+
+  tooltip.style.top =
+    `${event.clientY + 10}px`;
+}
+
+function renderTooltipContent(commit) {
+
+  document.getElementById('commit-link').href =
+    commit.url;
+
+  document.getElementById('commit-link').textContent =
+    commit.id;
+
+  document.getElementById('commit-date').textContent =
+    commit.datetime.toLocaleDateString();
+
+  document.getElementById('commit-time').textContent =
+    commit.datetime.toLocaleTimeString();
+
+  document.getElementById('commit-author').textContent =
+    commit.author;
+
+  document.getElementById('commit-lines').textContent =
+    commit.totalLines;
+}
+
 function renderScatterPlot(commits) {
 
   const width = 1000;
@@ -211,7 +253,22 @@ function renderScatterPlot(commits) {
     )
 
     .attr('r', 7)
-    .attr('fill', 'hotpink');
+    .attr('fill', 'hotpink')
+
+    .on('mouseenter', (event, commit) => {
+
+        renderTooltipContent(commit);
+
+        updateTooltipVisibility(true);
+
+        updateTooltipPosition(event);
+    })
+
+    .on('mouseleave', () => {
+
+        updateTooltipVisibility(false);
+    });
+
 }
 
 let data = await loadData();
