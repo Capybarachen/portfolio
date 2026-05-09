@@ -51,7 +51,7 @@ input, textarea {
 form {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1em;
+  gap: 1.5em;
 }
 
 label {
