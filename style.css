@@ -76,3 +76,39 @@ circle:hover {
 circle.selected {
   fill: hotpink;
 }
+
+dl.info {
+  color: black;
+
+  display: grid;
+
+  grid-template-columns:
+    auto 1fr;
+
+  gap: 0.5em;
+
+  margin: 0;
+
+  padding: 1em;
+
+  background: white;
+
+  border-radius: 0.5em;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.15);
+}
+
+.tooltip {
+  position: fixed;
+
+  top: 1em;
+  left: 1em;
+
+  z-index: 1000;
+}
+
+dl.info[hidden] {
+  opacity: 0;
+  visibility: hidden;
+}

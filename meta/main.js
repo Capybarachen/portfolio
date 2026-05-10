@@ -222,6 +222,22 @@ function renderScatterPlot(commitData) {
     .call(brush);
 
   brush.on('start brush end', brushed);
+  dots
+    .selectAll('circle')
+
+    .on('mouseenter', (event, commit) => {
+
+      renderTooltipContent(commit);
+
+      updateTooltipVisibility(true);
+
+      updateTooltipPosition(event);
+    })
+
+    .on('mouseleave', () => {
+
+      updateTooltipVisibility(false);
+    });
 }
 
 function brushed(event) {
@@ -268,6 +284,47 @@ function updateSelection() {
     selectedCommits.length === 0
       ? 'No commits selected'
       : `${selectedCommits.length} commits selected`;
+}
+
+function updateTooltipVisibility(isVisible) {
+
+  const tooltip =
+    document.getElementById('commit-tooltip');
+
+  tooltip.hidden = !isVisible;
+}
+
+function updateTooltipPosition(event) {
+
+  const tooltip =
+    document.getElementById('commit-tooltip');
+
+  tooltip.style.left =
+    `${event.clientX + 10}px`;
+
+  tooltip.style.top =
+    `${event.clientY + 10}px`;
+}
+
+function renderTooltipContent(commit) {
+
+  document.getElementById('commit-link').href =
+    commit.url;
+
+  document.getElementById('commit-link').textContent =
+    commit.id;
+
+  document.getElementById('commit-date').textContent =
+    commit.datetime.toLocaleDateString();
+
+  document.getElementById('commit-time').textContent =
+    commit.datetime.toLocaleTimeString();
+
+  document.getElementById('commit-author').textContent =
+    commit.author;
+
+  document.getElementById('commit-lines').textContent =
+    commit.totalLines;
 }
 
 renderCommitInfo(data, commits);
