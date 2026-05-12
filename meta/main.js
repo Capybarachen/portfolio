@@ -284,6 +284,24 @@ function updateSelection() {
     selectedCommits.length === 0
       ? 'No commits selected'
       : `${selectedCommits.length} commits selected`;
+
+  renderLanguageBreakdown();
+}
+
+function updateSelection() {
+
+  d3.selectAll('circle')
+    .classed('selected', d =>
+      selectedCommits.includes(d)
+    );
+
+  document.getElementById(
+    'selection-count'
+  ).textContent =
+
+    selectedCommits.length === 0
+      ? 'No commits selected'
+      : `${selectedCommits.length} commits selected`;
 }
 
 function updateTooltipVisibility(isVisible) {
@@ -326,7 +344,53 @@ function renderTooltipContent(commit) {
   document.getElementById('commit-lines').textContent =
     commit.totalLines;
 }
+function renderLanguageBreakdown() {
 
+  const container =
+    document.getElementById(
+      'language-breakdown'
+    );
+
+  container.innerHTML = '';
+
+  if (selectedCommits.length === 0) {
+    return;
+  }
+
+  const lines = selectedCommits.flatMap(
+    d => d.lines
+  );
+
+  const breakdown = d3.rollup(
+
+    lines,
+
+    v => v.length,
+
+    d => d.type
+  );
+
+  for (const [language, count] of breakdown) {
+
+    const proportion =
+      count / lines.length;
+
+    const dt =
+      document.createElement('dt');
+
+    dt.textContent = language;
+
+    const dd =
+      document.createElement('dd');
+
+    dd.textContent =
+      `${count} lines (${d3.format('.1~%')(proportion)})`;
+
+    container.appendChild(dt);
+
+    container.appendChild(dd);
+  }
+}
 renderCommitInfo(data, commits);
 
 renderScatterPlot(commits);
