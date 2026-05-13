@@ -41,3 +41,38 @@ h1 {
 circle {
   fill: cyan;
 }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+}
+
+.stats dt {
+  font-weight: bold;
+}
+
+.stats dd {
+  margin: 0;
+}
+
+.gridlines line {
+  stroke: #888;
+  stroke-opacity: 0.3;
+}
+
+.gridlines path {
+  display: none;
+}
+
+circle {
+  transition: 200ms;
+}
+
+circle:hover {
+  transform: scale(1.2);
+}
+
+circle.selected {
+  fill: hotpink;
+}
