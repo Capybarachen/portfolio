@@ -134,3 +134,17 @@ dl.info[hidden] {
 
   margin: 0;
 }
+
+circle {
+  transition: 200ms;
+}
+
+circle:hover {
+  transform: scale(1.2);
+}
+
+@starting-style {
+  circle {
+    r: 0;
+  }
+}

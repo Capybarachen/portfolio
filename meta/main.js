@@ -391,6 +391,95 @@ function renderLanguageBreakdown() {
     container.appendChild(dd);
   }
 }
+
+let commitProgress = 100;
+let commitMaxTime;
+let timeScale;
+
+function onTimeSliderChange() {
+
+  const progress = +event.target.value;
+
+  commitMaxTime = timeScale.invert(progress);
+
+  filteredCommits = commits.filter(
+    d => d.datetime <= commitMaxTime
+  );
+
+  d3.select('#commit-time-label')
+    .text(commitMaxTime.toLocaleString());
+
+  updateScatterPlot(filteredCommits);
+}
+
+function updateScatterPlot(commitData) {
+
+  const svg =
+    d3.select('#chart').select('svg');
+
+  xScale.domain(
+    d3.extent(commitData, d => d.datetime)
+  );
+
+  const xAxis = d3
+    .axisBottom(xScale);
+
+  svg.select('.x-axis')
+    .call(xAxis);
+
+  const rScale = d3
+    .scaleSqrt()
+
+    .domain(
+      d3.extent(commitData, d => d.totalLines)
+    )
+
+    .range([6, 28]);
+
+  svg.select('.dots')
+
+    .selectAll('circle')
+
+    .data(commitData)
+
+    .join('circle')
+
+    .attr(
+      'cx',
+      d => xScale(d.datetime)
+    )
+
+    .attr(
+      'cy',
+      d => yScale(d.hourFrac)
+    )
+
+    .attr(
+      'r',
+      d => rScale(d.totalLines)
+    )
+
+    .attr('fill', 'cyan')
+
+    .attr('fill-opacity', 0.7);
+}
 renderCommitInfo(data, commits);
 
 renderScatterPlot(commits);
+
+timeScale = d3.scaleTime()
+
+  .domain(
+    d3.extent(commits, d => d.datetime)
+  )
+
+  .range([0, 100]);
+
+commitMaxTime =
+  timeScale.invert(commitProgress);
+
+d3.select('#commit-time-label')
+  .text(commitMaxTime.toLocaleString());
+
+d3.select('#commit-progress')
+  .on('input', onTimeSliderChange);
