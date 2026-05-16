@@ -483,3 +483,81 @@ d3.select('#commit-time-label')
 
 d3.select('#commit-progress')
   .on('input', onTimeSliderChange);
+filteredCommits = commits;
+
+renderCommitStory(filteredCommits);
+
+setupScrollytelling();
+
+  function renderCommitStory(commitData) {
+
+  d3.select('#scatter-story')
+
+    .selectAll('.step')
+
+    .data(commitData)
+
+    .join('div')
+
+    .attr('class', 'step')
+
+    .html((d, i) => `
+
+      <p>
+
+        On ${d.datetime.toLocaleString('en', {
+
+          dateStyle: 'full',
+
+          timeStyle: 'short',
+
+        })},
+
+        I made
+
+        <a href="${d.url}" target="_blank">
+
+          ${
+            i > 0
+              ? 'another glorious commit'
+              : 'my first commit, and it was glorious'
+          }
+
+        </a>.
+
+        I edited ${d.totalLines} lines.
+
+      </p>
+    `);
+}
+
+function onStepEnter(response) {
+
+  commitMaxTime =
+    response.element.__data__.datetime;
+
+  filteredCommits = commits.filter(
+    d => d.datetime <= commitMaxTime
+  );
+
+  updateScatterPlot(filteredCommits);
+}
+
+function setupScrollytelling() {
+
+  const scroller = scrollama();
+
+  scroller
+
+    .setup({
+
+      container: '#scrolly-1',
+
+      step: '#scatter-story .step',
+
+      offset: 0.5,
+
+    })
+
+    .onStepEnter(onStepEnter);
+}
