@@ -171,3 +171,44 @@ circle:hover {
 .step {
   margin-bottom: 70vh;
 }
+
+#files {
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 4fr;
+
+  gap: 0.5em;
+}
+
+#files > div {
+
+  grid-column: 1 / -1;
+
+  display: grid;
+
+  grid-template-columns: subgrid;
+}
+
+#files dd {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 0.15em;
+
+  margin-left: 0;
+}
+
+.loc {
+
+  width: 0.5em;
+
+  aspect-ratio: 1;
+
+  background: var(--color);
+
+  border-radius: 50%;
+}

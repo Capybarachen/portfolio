@@ -410,6 +410,7 @@ function onTimeSliderChange() {
     .text(commitMaxTime.toLocaleString());
 
   updateScatterPlot(filteredCommits);
+  updateFileDisplay(filteredCommits);
 }
 
 function updateScatterPlot(commitData) {
@@ -489,6 +490,8 @@ renderCommitStory(filteredCommits);
 
 setupScrollytelling();
 
+updateFileDisplay(filteredCommits);
+
   function renderCommitStory(commitData) {
 
   d3.select('#scatter-story')
@@ -541,6 +544,7 @@ function onStepEnter(response) {
   );
 
   updateScatterPlot(filteredCommits);
+  updateFileDisplay(filteredCommits);
 }
 
 function setupScrollytelling() {
@@ -560,4 +564,68 @@ function setupScrollytelling() {
     })
 
     .onStepEnter(onStepEnter);
+}
+
+function updateFileDisplay(commitData) {
+
+  let lines =
+    commitData.flatMap(d => d.lines);
+
+  let files = d3.groups(
+    lines,
+    d => d.file
+  )
+
+  .map(([name, lines]) => ({
+    name,
+    lines,
+  }))
+
+  .sort(
+    (a, b) =>
+      b.lines.length - a.lines.length
+  );
+
+  const filesContainer = d3
+    .select('#files')
+
+    .selectAll('.file')
+
+    .data(files, d => d.name)
+
+    .join('div')
+
+    .attr('class', 'file');
+
+  filesContainer
+    .append('dt');
+
+  filesContainer
+    .append('dd');
+
+  filesContainer
+    .select('dt')
+
+    .html(d => `
+      <code>${d.name}</code>
+      <small>${d.lines.length} lines</small>
+    `);
+
+  filesContainer
+    .select('dd')
+
+    .selectAll('.loc')
+
+    .data(d => d.lines)
+
+    .join('div')
+
+    .attr('class', 'loc')
+
+    .style(
+      '--color',
+      d => d3.schemeTableau10[
+        d.depth % 10
+      ]
+    );
 }
