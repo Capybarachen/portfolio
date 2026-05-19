@@ -410,7 +410,7 @@ function onTimeSliderChange() {
     .text(commitMaxTime.toLocaleString());
 
   updateScatterPlot(filteredCommits);
-  updateFileDisplay(filteredCommits);
+
 }
 
 function updateScatterPlot(commitData) {
@@ -486,11 +486,6 @@ d3.select('#commit-progress')
   .on('input', onTimeSliderChange);
 filteredCommits = commits;
 
-renderCommitStory(filteredCommits);
-
-setupScrollytelling();
-
-updateFileDisplay(filteredCommits);
 
   function renderCommitStory(commitData) {
 
@@ -549,9 +544,9 @@ function onStepEnter(response) {
 
 function setupScrollytelling() {
 
-  const scroller = scrollama();
+  const scroller1 = scrollama();
 
-  scroller
+  scroller1
 
     .setup({
 
@@ -564,6 +559,32 @@ function setupScrollytelling() {
     })
 
     .onStepEnter(onStepEnter);
+
+  const scroller2 = scrollama();
+
+  scroller2
+
+    .setup({
+
+      container: '#scrolly-2',
+
+      step: '#files-story .step',
+
+      offset: 0.5,
+
+    })
+
+    .onStepEnter(response => {
+
+      commitMaxTime =
+        response.element.__data__.datetime;
+
+      filteredCommits = commits.filter(
+        d => d.datetime <= commitMaxTime
+      );
+
+      updateFileDisplay(filteredCommits);
+    });
 }
 
 function updateFileDisplay(commitData) {
@@ -629,3 +650,47 @@ function updateFileDisplay(commitData) {
       ]
     );
 }
+
+function renderFilesStory(commitData) {
+
+  d3.select('#files-story')
+
+    .selectAll('.step')
+
+    .data(commitData)
+
+    .join('div')
+
+    .attr('class', 'step')
+
+    .html((d, i) => `
+
+      <p>
+
+        On ${d.datetime.toLocaleString('en', {
+
+          dateStyle: 'full',
+
+          timeStyle: 'short',
+
+        })},
+
+        I edited ${d.totalLines} lines
+        across ${d.lines.length} changes.
+
+      </p>
+    `);
+}
+
+
+
+
+
+
+renderCommitStory(filteredCommits);
+
+setupScrollytelling();
+
+updateFileDisplay(filteredCommits);
+
+renderFilesStory(filteredCommits);
