@@ -395,7 +395,6 @@ function renderLanguageBreakdown() {
 let commitProgress = 100;
 let commitMaxTime;
 let timeScale;
-
 function onTimeSliderChange() {
 
   const progress = +event.target.value;
@@ -411,6 +410,9 @@ function onTimeSliderChange() {
 
   updateScatterPlot(filteredCommits);
 
+  updateFileDisplay(filteredCommits);
+
+  renderFilesStory(filteredCommits);
 }
 
 function updateScatterPlot(commitData) {
@@ -462,29 +464,22 @@ function updateScatterPlot(commitData) {
 
     .attr('fill', 'cyan')
 
-    .attr('fill-opacity', 0.7);
+    .attr('fill-opacity', 0.7)
+
+    .on('mouseenter', (event, commit) => {
+
+      renderTooltipContent(commit);
+
+      updateTooltipVisibility(true);
+
+      updateTooltipPosition(event);
+    })
+
+    .on('mouseleave', () => {
+
+      updateTooltipVisibility(false);
+    });
 }
-renderCommitInfo(data, commits);
-
-renderScatterPlot(commits);
-
-timeScale = d3.scaleTime()
-
-  .domain(
-    d3.extent(commits, d => d.datetime)
-  )
-
-  .range([0, 100]);
-
-commitMaxTime =
-  timeScale.invert(commitProgress);
-
-d3.select('#commit-time-label')
-  .text(commitMaxTime.toLocaleString());
-
-d3.select('#commit-progress')
-  .on('input', onTimeSliderChange);
-filteredCommits = commits;
 
 
   function renderCommitStory(commitData) {
