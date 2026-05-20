@@ -247,3 +247,15 @@ body {
 h2 {
   letter-spacing: 0.02em;
 }
+
+.loc {
+  transition: 300ms;
+}
+
+.file {
+  margin-bottom: 0.8em;
+}
+
+#files code {
+  font-size: 0.9em;
+}

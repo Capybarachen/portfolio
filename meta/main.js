@@ -490,9 +490,25 @@ function updateScatterPlot(commitData) {
 
     .data(commitData)
 
-    .join('div')
+    .join(
 
-    .attr('class', 'step')
+      enter => {
+
+        const div = enter
+          .append('div')
+          .attr('class', 'file');
+
+        div.append('dt');
+
+        div.append('dd');
+
+        return div;
+       },
+
+      update => update,
+
+      exit => exit.remove()
+    )
 
     .html((d, i) => `
 
@@ -634,7 +650,29 @@ function updateFileDisplay(commitData) {
 
     .data(d => d.lines)
 
-    .join('div')
+    .join(
+
+      enter =>
+
+        enter
+          .append('div')
+          .attr('class', 'loc')
+          .style('opacity', 0)
+          .call(enter =>
+            enter.transition()
+             .duration(300)
+             .style('opacity', 1)
+          ),
+
+      update => update,
+
+      exit =>
+
+        exit.transition()
+          .duration(200)
+          .style('opacity', 0)
+          .remove()
+    )
 
     .attr('class', 'loc')
 
