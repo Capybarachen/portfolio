@@ -540,7 +540,13 @@ function updateScatterPlot(commitData) {
 
         </a>.
 
-        I edited ${d.totalLines} lines.
+        I edited ${d.totalLines} lines
+        across ${d3.rollups(
+          d.lines,
+          D => D.length,
+          d => d.file
+        ).length}
+        files.
 
       </p>
     `);
@@ -715,7 +721,12 @@ function renderFilesStory(commitData) {
         })},
 
         I edited ${d.totalLines} lines
-        across ${d.lines.length} changes.
+        across ${d3.rollups(
+          d.lines,
+          D => D.length,
+          d => d.file
+        ).length}
+        files.
 
       </p>
     `);

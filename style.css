@@ -284,3 +284,32 @@ circle:hover {
 
   filter: brightness(1.3);
 }
+
+#language-breakdown dt {
+
+  grid-row: 1;
+
+  font-size: 1.3em;
+
+  font-weight: bold;
+}
+
+#language-breakdown dd {
+
+  grid-row: 2;
+
+  margin: 0;
+
+  font-size: 1.1em;
+}
+
+#scatter-plot,
+#files-section {
+
+  align-self: start;
+}
+
+.step {
+
+  padding-bottom: 30vh;
+}
