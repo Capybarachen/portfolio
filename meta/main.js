@@ -410,6 +410,7 @@ function onTimeSliderChange() {
     .text(commitMaxTime.toLocaleString());
 
   updateScatterPlot(filteredCommits);
+  renderCommitStory(filteredCommits);
 
   updateFileDisplay(filteredCommits);
 
@@ -562,6 +563,7 @@ function onStepEnter(response) {
   );
 
   updateScatterPlot(filteredCommits);
+  renderCommitStory(filteredCommits);
   updateFileDisplay(filteredCommits);
 }
 
@@ -607,6 +609,8 @@ function setupScrollytelling() {
       );
 
       updateFileDisplay(filteredCommits);
+
+      renderFilesStory(filteredCommits);
     });
 }
 

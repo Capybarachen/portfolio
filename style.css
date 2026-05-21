@@ -313,3 +313,17 @@ circle:hover {
 
   padding-bottom: 30vh;
 }
+
+#scatter-story,
+#files-story {
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+#scatter-story p,
+#files-story p {
+
+  line-height: 1.6;
+}
