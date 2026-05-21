@@ -210,6 +210,7 @@ function renderScatterPlot(commitData) {
     .attr('fill', 'cyan')
 
     .attr('fill-opacity', 0.7);
+    .attr('class', 'commit')
 
   const brush = d3.brush()
 
@@ -443,7 +444,12 @@ function updateScatterPlot(commitData) {
 
     .selectAll('circle')
 
-    .data(commitData)
+    .data(
+      d3.sort(
+        commitData,
+        d => -d.totalLines
+      )
+    )
 
     .join('circle')
 

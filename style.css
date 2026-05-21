@@ -259,3 +259,28 @@ h2 {
 #files code {
   font-size: 0.9em;
 }
+
+dl.info {
+  transition:
+    opacity 200ms,
+    visibility 200ms;
+}
+
+circle {
+
+  transform-origin: center;
+
+  transform-box: fill-box;
+}
+
+circle.selected {
+
+  stroke: white;
+
+  stroke-width: 2;
+}
+
+circle:hover {
+
+  filter: brightness(1.3);
+}
