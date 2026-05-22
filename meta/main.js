@@ -579,7 +579,7 @@ function setupScrollytelling() {
 
       step: '#scatter-story .step',
 
-      offset: 0.5,
+      offset: 0.45,
 
     })
 
