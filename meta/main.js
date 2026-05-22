@@ -190,7 +190,28 @@ function renderScatterPlot(commitData) {
   dots
     .selectAll('circle')
     .data(commitData)
-    .join('circle')
+        .join(
+
+      enter =>
+
+        enter
+          .append('circle')
+          .style('opacity', 0)
+          .call(enter =>
+            enter.transition()
+              .duration(300)
+              .style('opacity', 1)
+          ),
+
+      update => update,
+
+      exit =>
+
+        exit.transition()
+          .duration(200)
+          .style('opacity', 0)
+          .remove()
+    )
 
     .attr(
       'cx',
@@ -641,7 +662,24 @@ function updateFileDisplay(commitData) {
 
     .data(files, d => d.name)
 
-    .join('div')
+    .join(
+
+      enter =>
+
+       enter
+          .append('div')
+          .attr('class', 'step')
+          .style('opacity', 0)
+          .call(enter =>
+            enter.transition()
+              .duration(300)
+              .style('opacity', 1)
+          ),
+
+      update => update,
+
+      exit => exit.remove()
+    )
 
     .attr('class', 'file');
 

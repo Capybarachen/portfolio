@@ -354,3 +354,45 @@ circle:hover {
 
   margin-top: 1.5rem;
 }
+
+.loc {
+
+  transition:
+    opacity 200ms,
+    transform 200ms;
+}
+
+.loc:hover {
+
+  transform: scale(1.4);
+}
+
+.file {
+
+  transition: 300ms;
+}
+
+#files small {
+
+  opacity: 0.7;
+}
+
+svg {
+
+  overflow: visible;
+}
+
+#chart {
+
+  margin-top: 1rem;
+}
+
+.tooltip {
+
+  pointer-events: none;
+}
+
+dl.info {
+
+  backdrop-filter: blur(4px);
+}
